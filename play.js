@@ -27,8 +27,9 @@ function play() {
 function lc() {
 		c = document.getElementById('c');
 		ctx = c.getContext('2d');
-		c.onclick = e=>gonclick(g,c,ctx,g,xcenter,ycenter,scale,e)
-		c.oncontextmenu = (e) => {e.preventDefault(); gonrclick(g,c,ctx,g,xcenter,ycenter,scale,e)};
+		c.onmousedown = e=>mousedownshell(g,c,ctx,xcenter,ycenter,scale,e);
+		c.onmouseup = e=>mouseup(c);
+		c.oncontextmenu = (e)=>e.preventDefault();
 		drawGrid(g, ctx, xcenter,ycenter,scale);
 		document.addEventListener('keydown', e=>{
 				if(e.key == "p") pptoggle(e);
@@ -40,7 +41,6 @@ function lc() {
 		playbtn = document.getElementById('playpause');
 		playbtn.addEventListener('click',pptoggle);
 		range = document.getElementById("tempo");
-		//range.addEventListener('click', function(e) {timeout=range.value});
 		range.onclick = (e) => rangeManage(e);
 		clr = document.getElementById("clear");
 		clr.onclick = () => {g.cells = [];
@@ -141,7 +141,7 @@ reflectThingy = function(evt) {
 		let rad = parseInt(document.getElementById('rad').value);
 		g.reflHex(coords.q,coords.r,rad);
 		drawGrid(g, ctx, xcenter,ycenter,scale);
-		c.onclick = e=>wwonclick(c,ctx,g,xcenter,ycenter,scale,e);
+		c.onclick = null;
 }
 flipButtonHandler = function(e) {
 		c.onclick =  e=>flipThingy(e);
@@ -153,7 +153,7 @@ flipThingy = function(evt) {
 		let rad = parseInt(document.getElementById('rad').value);
 		g.flipHex(coords.q,coords.r,rad);
 		drawGrid(g, ctx, xcenter,ycenter,scale);
-		c.onclick = e=>wwonclick(c,ctx,g,xcenter,ycenter,scale,e);
+		c.onclick = null;
 }
 rotateButtonHandler = function(e) {
 		c.onclick =  e=>rotateThingy(e);
@@ -165,7 +165,7 @@ rotateThingy = function(evt) {
 		let rad = parseInt(document.getElementById('rad').value);
 		g.rotateHex(coords.q,coords.r,rad);
 		drawGrid(g, ctx, xcenter,ycenter,scale);
-		c.onclick = e=>wwonclick(c,ctx,g,xcenter,ycenter,scale,e);
+		c.onclick = null;
 }
 
 copyHandler = function(e) {
@@ -178,7 +178,7 @@ copyhex = function(evt) {
 		let rad = parseInt(document.getElementById('rad').value);
 		copybuf = g.copyHex(coords.q, coords.r, rad)
 		drawGrid(g, ctx, xcenter,ycenter,scale);
-		c.onclick = e=>wwonclick(c,ctx,g,xcenter,ycenter,scale,e);
+		c.onclick = null;
 }
 pasteHandler = function(e) {
 		c.onclick = e=>pastehex(e);
@@ -194,7 +194,7 @@ pastehex = function(evt) {
 		let rad = parseInt(document.getElementById('rad').value);
 		g.pasteHex(coords.q,coords.r,copybuf);
 		drawGrid(g, ctx, xcenter,ycenter,scale);
-		c.onclick = e=>wwonclick(c,ctx,g,xcenter,ycenter,scale,e);
+		c.onclick = null;
 }
 
 exportState = function() {
@@ -232,4 +232,37 @@ function getClickCoords(c, scale, xoff, yoff, event) {
 		r = Math.round(prer);
 		q = Math.round(preq);
 		return {r: r, q: q};
+}
+
+
+var mmLatestSpot = null;
+function mouseMover(g,c,ctx,xc,yc,scl,isLClick,evt) {
+		return function(evt) {
+				let rqcoord = getClickCoords(c,scl,xc,yc,evt);
+				if(rqcoord.q == mmLatestSpot.q && rqcoord.r == mmLatestSpot.r) {
+						return;
+				}
+				mmLatestSpot = rqcoord;
+				let currst8 = g.stateAt(rqcoord.q, rqcoord.r);
+				let nextst8 = nextKey(currst8,isLClick);
+				g.change(nextst8, rqcoord.q, rqcoord.r);
+				drawGrid(g, ctx, xc, yc, scl);
+		}
+}
+
+var currmovefn = null;
+function mousedownshell(g,c,ctx,xc,yc,scl,evt) {
+		evt.preventDefault();
+		let islclick = evt.button == 0;
+		currmovefn = mouseMover(g,c,ctx,xc,yc,scl,islclick,evt);
+		c.addEventListener('mousemove', currmovefn);
+		let rqcoord = getClickCoords(c,scl,xc,yc,evt);
+		mmLatestSpot = rqcoord;
+		let currst8 = g.stateAt(rqcoord.q, rqcoord.r);
+		let nextst8 = nextKey(currst8,islclick);
+		g.change(nextst8, rqcoord.q, rqcoord.r);
+		drawGrid(g, ctx, xc, yc, scl);
+}
+function mouseup(c) {
+		c.removeEventListener('mousemove',currmovefn);
 }

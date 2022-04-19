@@ -165,6 +165,28 @@ class Grid {
 						this.change(cp.state, cp.q+q, cp.r+r);
 				}
 		}
+
+
+		// still experimental, not a clear way to properly utilise yet
+		getLine(idx, dir) {
+				// idx is the index, i.e. 6 in r=6
+				// dir is in {q,r,s}
+				var theline = [];
+				for(let i of this.cells) {
+						if(i[dir] == idx) theline.push(i);
+				}
+				return theline;
+		}
+		pasteLine(q,r,dir,buf) {
+				let idx = (new Hex(q,r))[dir];
+				for(let i of this.cells) {
+						if(i[dir] == idx) i.state = this.defaultstate;
+				}
+				for(let i in buf) {
+						let cp = i.clone();
+						this.change(cp.state,cp.q,cp.r);
+				}
+		}
 }
 
 
@@ -178,6 +200,7 @@ function drawGrid(g, ctx, xc, yc, scl) {
 
 
 function gonclick(g,c,ctx,grid,xc,yc,scl,evt) {
+		//console.log(evt);
 		let rqcoord = getClickCoords(c, scl, xc, yc, evt);
 		let currst8 = g.stateAt(rqcoord.q, rqcoord.r);
 		let nextst8 = nextKey(currst8);
@@ -185,6 +208,7 @@ function gonclick(g,c,ctx,grid,xc,yc,scl,evt) {
 		drawGrid(g, ctx, xc, yc, scl);
 }
 function gonrclick(g,c,ctx,grid,xc,yc,scl,evt) {
+		//console.log(evt);
 		let rqcoord = getClickCoords(c, scl, xc, yc, evt);
 		let currst8 = g.stateAt(rqcoord.q, rqcoord.r);
 		let nextst8 = nextKey(currst8,false);

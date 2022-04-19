@@ -1,7 +1,7 @@
 
 This is a simple javascript library for hexagonal grids.
 
-This was initially created for cellular automata, but it's reasonably adaptable for many things you might want a hexagonal grid for.
+This was initially created for cellular automata, but it's reasonably adaptable for many things you might want a hexagonal grid for, such as board games and other games.
 The library itself is minimal, but the other included code provides mostly simple and handy editing utilities.
 
 TO USE
