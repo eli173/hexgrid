@@ -1,0 +1,29 @@
+
+This is a simple javascript library for hexagonal grids.
+
+This was initially created for cellular automata, but it's reasonably adaptable for many things you might want a hexagonal grid for.
+The library itself is minimal, but the other included code provides mostly simple and handy editing utilities.
+
+TO USE
+
+A complete example is found in =basic.js=
+There isn't much to implement in order to make full use of the tools here.
+
+
+The first thing to implement is probably the state enum. It's just an object that describes the states that your grid can take. The only hard requirement is that it defines a 'default' state, one that typically might not have a visual representation and has a minimal semantic meaning. The freeze in the example is not necessary, and is only used here as to not accidentally change it. The state enum can certainly be changed as you see fit, and even programmatically if you find that appropriate.
+
+Along with the state enum is the 'nextKey' function, which is optional but necessary for the editor. This controls the order in which the states cycle through in the editor. The function takes as arguments the current state, and whether or not one is going forward or backward through the keys in the object. It should return whichever you would like to be next given the argument.
+
+
+Next, one must extend the Hex class. One must implement the constructor, which should at minimum call the super's constructur and record the desired state. The clone method should just clone the current object (maintaining at least the coordinates and state), and is necessary for the display and editing tools. The fromJSON method is used only for the importing feature, and need be only as complicated as you would like it to be.
+
+Finally, the drawState method is probably the most complicated method in this class. If you don't intend to visualise your grids at all this is not necessary, but this method can be incredibly powerful if you choose to make it so. Though it is probably in your best interest to keep the drawing within the boundaries of the hex cell's space in the grid, you do not need to do so. You can make particular states as sprawling as the context asks, as big and detailed as you want. The arguments are the canvas context =ctx= on which to draw, the =x= and =y= coordinates on which the cell in centered, and the size or scale of the grid. It's recommended to save and restore the canvas at the beginning and end of the method, but again your discretion is paramount.
+
+
+Finally, extend the Grid class. The constructor needs to call the super's constructor, and pass the subclass you've defined above and your desired 'default' state. There's also an optional 'step' method, which is mostly useful for cellular automata, and enables the play and pause features in the editor (and which can be useful in other contexts as well). This method determines the state of the grid which is to follow immediately from its current state. The 'clone' method from the Hex subclass may be incredibly useful here.
+
+
+And that's it. To use your new implementation in the editor, just set the variable =g= to a new instance of your grid, and replace 'basic.js' with the name of your file in 'index.html', then load up the 'index.html' in your browser.
+
+
+The editor has copying and pasting features, transformation features, saving, loading, importing and exporting features, and can advance and play cellular automata.
