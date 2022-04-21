@@ -1,0 +1,67 @@
+<!doctype html>
+<meta charset="utf-8">
+<html>
+  <head>
+    <script src="grid.js"></script>
+		<script src="cell.js"></script>
+		<script src="play.js"></script>
+		<script src="wireworld.js"></script>
+		<script src="wwdemos.js"></script>
+		<script>
+			function run() {
+					lc();
+			}
+		</script>
+		<style>
+			span {
+					margin=left: 15px;
+			}
+			input[type=number] {
+					width: 30px;
+					margin-left: 15px;
+			}
+			select {
+					margin-left: 15px;
+			}
+			#es {
+					margin-left: 15px;
+			}
+		</style>
+		<link rel="icon" type="image/png" href="icn.png"/>
+    <title>hexagonal grids</title>
+  </head>
+  <body onload="run()" style="background-color: #f8f8ff;">
+		<div class="ctrl">
+			<span>
+				<input type="button" id="step" value="step"/>
+				<input type="button" id="playpause" value="play"/>
+				<input type="range" id="tempo" value="150" min="20" max="500"/>
+				<input type="button" id="clear" value="clear"/>
+				<input type="button" id="reset" value="reset"/>
+			</span>
+			<span>
+				<input type="number" id="rad" value="9" min="1" max="30" step="1"/>
+				<input type="button" id="rot" value="rotate hex"/>
+				<input type="button" id="flp" value="flip hex"/>
+				<input type="button" id="rfl" value="reflect hex"/>
+				<input type="button" id="copy" value="copy hex"/>
+				<input type="button" id="paste" value="paste hex"/>
+			</span>
+			<span>
+				<input type="number" id="slot" value="1" min="1" max="9" step="1"/>
+				<input type="button" id="save" value="save state"/>
+				<input type="button" id="load" value="load state"/>
+			</span>
+			<span>
+				<select name="demo" id="seldemo"></select>
+				<input type="button" id="dload" value="load demo"/>
+			</span>
+			<span>
+				<input type="button" id="es" value="export state"/>
+				<input type="button" id="is" value="import state"/>
+			</span>
+			<details><summary></summary><span id="outzone"></span></details>
+		</div>
+    <div><canvas width="2000" height="2000" id="c"></canvas></div>
+  </body>
+</html>
