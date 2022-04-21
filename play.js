@@ -10,6 +10,7 @@ ycenter = 200
 scale = 10
 
 
+var demos = {};
 
 var ctx = null;
 var c = null;
@@ -65,6 +66,26 @@ function lc() {
 		fl.onclick = flipButtonHandler;
 		rf = document.getElementById("rfl");
 		rf.onclick = reflectButtonHandler;
+		load_demos(document.getElementById('seldemo'));
+		dl = document.getElementById("dload");
+		dl.onclick = demoHandler;
+
+}
+
+demoHandler = function(e) {
+		let which = document.getElementById('seldemo').value;
+		g.loadState(demos[which]);
+		drawGrid(g, ctx, xcenter,ycenter,scale);
+}
+
+
+load_demos = function(selelt) {
+		for(let k in demos) {
+				let opt = document.createElement('option');
+				opt.value = k;
+				opt.innerText = k;
+				selelt.appendChild(opt);
+		}
 }
 
 radius_hover = function(e) {
