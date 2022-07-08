@@ -1,0 +1,7 @@
+
+
+
+function copyrow(num, kind) {
+		
+		
+}
