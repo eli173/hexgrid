@@ -33,7 +33,24 @@ class WWHex extends Hex {
 				return new WWHex(o.state, o.q, o.r);
 		}
 		drawState(ctx, x, y, sz) {
-				ctx.save();
+				switch(this.state) {
+				case WWState.OFF:
+						drawHexagon(ctx,x,y,sz,'rgb(0,0,0)');
+						return;
+						break;
+				case WWState.TAIL:
+						drawHexagon(ctx,x,y,sz,'rgb(0,0,255)');
+						return;
+						break;
+				case WWState.HEAD:
+						drawHexagon(ctx,x,y,sz,'rgb(255,0,0)');
+						return;
+						break;
+				case WWState.EMPTY:
+						return;
+						break;
+				}
+				/*ctx.save();
 				switch(this.state) {
 				case WWState.OFF:
 						ctx.fillStyle = 'rgb(0,0,0)';
@@ -56,7 +73,7 @@ class WWHex extends Hex {
 				ctx.arc(x,y,r,0,Math.PI*2,true);
 				ctx.fill();
 				ctx.stroke();
-				ctx.restore();
+				ctx.restore();*/
 		}
 };
 
