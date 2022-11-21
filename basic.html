@@ -5,10 +5,9 @@
     <script src="grid.js"></script>
 		<script src="cell.js"></script>
 		<script src="play.js"></script>
-		<script src="life.js"></script>
+		<script src="basic.js"></script>
 		<script>
 			function run() {
-					initRulue();
 					lc();
 			}
 		</script>
@@ -38,33 +37,6 @@
 				<input type="range" id="tempo" value="150" min="20" max="500"/>
 				<input type="button" id="clear" value="clear"/>
 				<input type="button" id="reset" value="reset"/>
-			</span>
-			<span style="display:inline;">
-				<details style="display:inline-block;">
-					<summary style="float:left;">rule</summary>
-					<details id="rule" style="float:left">
-						<summary style="float:left;">born</summary>
-						<span style="float:left;">
-							<input type="checkbox" id="b1" name="1" >1
-							<input type="checkbox" id="b2" name="2" checked>2
-							<input type="checkbox" id="b3" name="3" >3
-							<input type="checkbox" id="b4" name="4" >4
-							<input type="checkbox" id="b5" name="5" >5
-							<input type="checkbox" id="b6" name="6" >6
-						</span>
-					</details>
-					<details id="surv" style="float:left">
-						<summary style="float:left;">survives</summary>
-						<span style="float:left;">
-							<input type="checkbox" id="s1" name="1" >1
-							<input type="checkbox" id="s2" name="2" >2
-							<input type="checkbox" id="s3" name="3" checked>3
-							<input type="checkbox" id="s4" name="4" checked>4
-							<input type="checkbox" id="s5" name="5" >5
-							<input type="checkbox" id="s6" name="6" >6
-						</span>
-					</details>
-				</details>
 			</span>
 			<span>
 				<input type="number" id="rad" value="9" min="1" max="30" step="1"/>

@@ -4,14 +4,23 @@
   <head>
     <script src="grid.js"></script>
 		<script src="cell.js"></script>
-		<script src="play.js"></script>
-		<script src="basic.js"></script>
+		<script src="minplay.js"></script>
+		<script src="life.js"></script>
 		<script>
 			function run() {
 					lc();
+					setInterval(play, 200);
 			}
 		</script>
 		<style>
+			.d {
+					text-align:center;
+					margin: 0 auto;
+			}
+			.d2 {
+					max-width: 600px;
+					margin: 0 auto;
+			}
 			span {
 					margin=left: 15px;
 			}
@@ -30,33 +39,27 @@
     <title>hexagonal grids</title>
   </head>
   <body onload="run()" style="background-color: #f8f8ff;">
-		<div class="ctrl">
-			<span>
-				<input type="button" id="step" value="step"/>
-				<input type="button" id="playpause" value="play"/>
-				<input type="range" id="tempo" value="150" min="20" max="500"/>
-				<input type="button" id="clear" value="clear"/>
-				<input type="button" id="reset" value="reset"/>
-			</span>
-			<span>
-				<input type="number" id="rad" value="9" min="1" max="30" step="1"/>
-				<input type="button" id="rot" value="rotate hex"/>
-				<input type="button" id="flp" value="flip hex"/>
-				<input type="button" id="rfl" value="reflect hex"/>
-				<input type="button" id="copy" value="copy hex"/>
-				<input type="button" id="paste" value="paste hex"/>
-			</span>
-			<span>
-				<input type="number" id="slot" value="1" min="1" max="9" step="1"/>
-				<input type="button" id="save" value="save state"/>
-				<input type="button" id="load" value="load state"/>
-			</span>
-			<span>
-				<input type="button" id="es" value="export state"/>
-				<input type="button" id="is" value="import state"/>
-			</span>
-			<details><summary></summary><span id="outzone"></span></details>
+		<div class="d2">
+			<div class="d">
+				<div>
+					<p>Here's a nice playground for a few cellular automata on a hexagonal grid:</p>
+					<ul>
+						<li><a href="rps.html">Game of Life</a></li>
+						<li><a href="ww.html">WireWorld</a></li>
+						<li><a href="life.html">Rock-Paper-Scissors Automata</a></li>
+					</ul>
+					<p>In all of these, you'll be brought to a blank canvas, where you can create your own patterns and run them as automata. Clicking in the vast space you're given will add or remove cells from the simulation and change their statuses. You can also change the speed with the slider, and do some advanced editing with the other tools at the top, as well as saving and exporting your arrangements (the export output is hidden by the little triangle until you click it).</p>
+					<p>The Game of  Life one is a standard port of the classic. You can even adjust how many neighbors cause cells to survive or spawn.</p>
+					<p>WireWorld is another classic automata. This is the one I've done the most with, and it's fairly straightforward to implement various logic gates here. I've done so, and put a 'demo' menu on this page, so you can see some examples of this. There are some cool ones, take a look!</p>
+					<p>If you'd like to implement your own form of hexagonal-grid automata, check out the <a href="README">README</a> file.</p>
+					<p>Just a note, this is not fast. The primary focus of this was to get something extensible and fun up quickly. I am liable to redesign this with speed in mind, but if I do, it will keep the same extensibility you find in the current version.</p>
+				</div>
+				<input type="button" id="step" value="step" hidden />
+				<input type="range" id="tempo" value="150" min="20" max="500" hidden />
+				<div><canvas width="200" height="200" id="c"></canvas></div>
+				<input type="button" id="refr" value="refresh" />
+				<p>Maybe, one day in the distant future, if we're nice enough, bees will help us compute things. This is the first step towards that.</p>
+			</div>
 		</div>
-    <div><canvas width="2000" height="2000" id="c"></canvas></div>
   </body>
 </html>

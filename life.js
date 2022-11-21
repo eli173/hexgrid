@@ -9,8 +9,10 @@
 //let PRODUCES = [2];
 
 // alt?
-let SURVIVAL = [3];
-let PRODUCES = [2];
+//let SURVIVAL = [3];
+//let PRODUCES = [2];
+let SURVIVAL = new Set([3]);
+let PRODUCES = new Set([2]);
 
 
 const LifeState = {
@@ -79,12 +81,12 @@ class LifeGrid extends Grid {
 								}
 								let nbrct = nbrs.reduce(reducefn,0);
 								if(cellcp[i].state == LifeState.ON) {
-										if(!SURVIVAL.includes(nbrct)) {
+										if(!SURVIVAL.has(nbrct)) {
 												this.cells[i].state = LifeState.OFF;
 										}
 								}
 								if(cellcp[i].state == LifeState.OFF) {
-										if(PRODUCES.includes(nbrct)) {
+										if(PRODUCES.has(nbrct)) {
 												this.cells[i].state = LifeState.ON;
 										}
 								}
@@ -110,7 +112,12 @@ function blankHex(q,r,sz,g) {
 		}
 }
 
-
+function randHex(q,r,sz,g,val=0.5) {
+		let h = g.copyHex(q,r,sz);
+		for(let c of h) {
+				g.change(Math.random() > val? LifeState.OFF:LifeState.ON, c.q,c.r);
+		}
+}
 function randomize(q,r,g) {
 		// puts random elements in the grid
 		for(let i=0;i<q;i++) {
@@ -123,5 +130,23 @@ function randomize(q,r,g) {
 								g.change(LifeState.ON,i,j);
 						}
 				}
+		}
+}
+
+function initRulue() {
+		let toggler = (e) => {
+				let which = parseInt(e.target.name);
+				let toBeChanged = e.target.id[0] == 'b' ? PRODUCES: SURVIVAL;
+				if(e.target.checked) {
+						toBeChanged.add(which);
+				}
+				else {
+						toBeChanged.delete(which);
+				}
+		}
+		let a = ["s1","s2","s3","s4","s5","s6","b1","b2","b3","b4","b5","b6"];
+		for(let i of a) {
+				console.log(i);
+				document.getElementById(i).onclick = toggler;
 		}
 }

@@ -23,7 +23,7 @@ Finally, the drawState method is probably the most complicated method in this cl
 Finally, extend the Grid class. The constructor needs to call the super's constructor, and pass the subclass you've defined above and your desired 'default' state. There's also an optional 'step' method, which is mostly useful for cellular automata, and enables the play and pause features in the editor (and which can be useful in other contexts as well). This method determines the state of the grid which is to follow immediately from its current state. The 'clone' method from the Hex subclass may be incredibly useful here.
 
 
-And that's it. To use your new implementation in the editor, just set the variable =g= to a new instance of your grid, and replace 'basic.js' with the name of your file in 'index.html', then load up the 'index.html' in your browser.
+And that's it. There are only a couple more things to do before you can use your new implementation in the editor. First, set the variable =g= to a new instance of your grid. Then, make a copy of 'basic.html' named as you'd like, and then in that file replace 'basic.js' with the name of the file your implementation is in. With that done, you can load up the new html file in your browser and get to it!
 
 
 The editor has copying and pasting features, transformation features, saving, loading, importing and exporting features, and can advance and play cellular automata.

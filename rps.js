@@ -153,3 +153,15 @@ function randomize(q,r,g) {
 				}
 		}
 }
+function randHex(q,r,sz,g) {
+		let h = g.copyHex(q,r,sz)
+		for(let c of h) {
+				let rv = Math.floor(Math.random()*3);
+				if(rv<1) 
+						g.change(RPSState.ROCK,c.q,c.r);
+				else if(rv<2)
+						g.change(RPSState.PAPER,c.q,c.r);
+				else
+						g.change(RPSState.SCISSORS,c.q,c.r);
+		}
+}
